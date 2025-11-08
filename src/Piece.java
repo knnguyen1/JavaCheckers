@@ -37,6 +37,26 @@ public abstract class Piece
 	}
 	
 	/**
+	 * Get the row of the piece
+	 * 
+	 * @param row
+	 */
+	public int getRow()
+	{
+		return row;
+	}
+	
+	/**
+	 * Get the column of the piece
+	 * 
+	 * @param column
+	 */
+	public int getColumn()
+	{
+		return column;
+	}
+	
+	/**
 	 * Get the owner of the piece
 	 * 
 	 * @param owner

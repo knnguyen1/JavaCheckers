@@ -17,17 +17,41 @@ public class KingPiece extends Piece	// A KingPiece is-a Piece
 	@Override
 	ArrayList<Move> getValidMoves(Board board)
 	{
-		//TODO: Add exception and logic
+		// Creates an empty arraylist to store possible moves.
+		ArrayList<Move> possibleMoves = new ArrayList<Move>();
 		
-		if (Board[row+1][column+1] == null)
+		// Loops through the possible diagonal moves for any potential moves: top left, top right, bottom left and bottom right 
+		for (int rowDirection = -1; rowDirection <= 1; rowDirection += 2)
 		{
-			
+			for (int colDirection = -1; colDirection <= 1; colDirection += 2)
+			{
+				// Stores the ending coordinates
+				int row = super.getRow() + rowDirection;
+				int col = super.getColumn() + colDirection;
+				
+				// Creates a new move with the ending coordinates
+				Move newMove = new Move(super.getRow(), super.getColumn(), row, col, this, null);
+				
+				// Checks whether the move is in bounds and there is an empty space for the piece to move
+				if (board.isMoveInBounds(newMove) && board.getPieceAt(row, col) == null)
+				{
+					possibleMoves.add(newMove);
+				}
+				// Checks whether there is a possible move in the direction but as a jump 
+				else if (board.getPieceAt(row, col) != null)
+				{
+					Move newJumpMove = new Move(super.getRow(), super.getColumn(), row + rowDirection, col + colDirection, this, board.getPieceAt(row, col));
+					
+					// Checks whether the jump move is valid
+					if (board.isMoveInBounds(newJumpMove) && board.getPieceAt(row + rowDirection, col + colDirection) == null && board.getPieceAt(row, col).getOwner() != super.getOwner())
+					{
+						possibleMoves.add(newJumpMove);
+					}
+				}
+			}
 		}
-		if (Board[row-1][column-1] == null)
-		{
-			
-		}
+		
+		// Return the result
+		return possibleMoves;
 	}
-	
-	
 }

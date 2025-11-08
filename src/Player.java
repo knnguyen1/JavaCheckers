@@ -24,6 +24,7 @@ public class Player
 	private String name;	// A Player has-a name
 	private String color;	// A Player has-a piece color
 	private ArrayList<Piece> pieces;	// A Player has-many pieces
+	private int direction;	// A Player has-a direction that they move on the Board
 	
 	/**
 	 * Parameter Constructor. Sets the name and color of the player to the given name and color.
@@ -31,10 +32,11 @@ public class Player
 	 * @param name
 	 * @param color
 	 */
-	public Player(String name, String color)
+	public Player(String name, String color, int direction)
 	{
 		this.name = name;
 		this.color = color;
+		this.direction = direction;
 		pieces = new ArrayList<Piece>();
 	}
 	
@@ -57,6 +59,15 @@ public class Player
 	}
 	
 	/**
+	 * Gets the direction that the player's regular pieces moves in
+	 * @return +1 if the player moves down on the board, -1 if they move forward
+	 */
+	public int getDirection()
+	{
+		return direction;
+	}
+	
+	/**
 	 * Gets a list of the pieces that the player has
 	 * @return arraylist of pieces
 	 */
@@ -70,7 +81,7 @@ public class Player
 	 */
 	public void removePiece(Piece piece)
 	{
-		// TODO: add exception
+		// TODO: Add Exception Here
 		int index = pieces.indexOf(piece);
 		pieces.remove(index);
 	}

@@ -60,6 +60,26 @@ public class Move
 		}
 	}
 	
+	public int getFromRow()
+	{
+		return fromRow;
+	}
+	
+	public int getFromColumn()
+	{
+		return fromColumn;
+	}
+	
+	public int getToRow()
+	{
+		return toRow;
+	}
+	
+	public int getToColumn()
+	{
+		return toColumn;
+	}
+	
 	/**
 	 * Gets a string of information about the move
 	 * 
@@ -67,7 +87,7 @@ public class Move
 	 */
 	public String toString()
 	{
-		String moveInfo = capturedPiece.getOwner().getName() + " moved their piece from (" + fromRow + ", " + fromColumn + ") to (" + toRow + " ," + toColumn + ")";
+		String moveInfo = pieceMoved.getOwner().getName() + " moved their piece from (" + fromRow + ", " + fromColumn + ") to (" + toRow + " ," + toColumn + ")";
 				
 		if (madeCapture())
 		{
