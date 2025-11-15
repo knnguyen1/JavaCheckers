@@ -1,22 +1,5 @@
 import java.util.ArrayList;
 
-/**
- * Lead Author(s):
- * @author Kailyn Nguyen
- * 
- * Other contributors:
- * None
- * 
- * References:
- * Morelli, R., & Walde, R. (2016). Java, Java, Java: Object-Oriented Problem Solving.
- * Retrieved from
- * https://open.umn.edu/opentextbooks/textbooks/java-java-java-object-oriented-problem-solving
- * 
- * Version/date: October 30, 2025
- * 
- * Responsibilities of class: 
-* A king piece is a piece that can move forward and backward diagonally.
- */
 public class KingPiece extends Piece	// A KingPiece is-a Piece
 {
 	/**
@@ -25,7 +8,6 @@ public class KingPiece extends Piece	// A KingPiece is-a Piece
 	 * @param row
 	 * @param column
 	 * @param owner
-	 * 
 	 */
 	public KingPiece(int row, int column, Player owner)
 	{
