@@ -3,30 +3,31 @@ import java.util.ArrayList;
 /**
  * Lead Author(s):
  * @author Kailyn Nguyen
- * 
+ *
  * Other contributors:
  * None
- * 
+ *
  * References:
  * Morelli, R., & Walde, R. (2016). Java, Java, Java: Object-Oriented Problem Solving.
  * Retrieved from
  * https://open.umn.edu/opentextbooks/textbooks/java-java-java-object-oriented-problem-solving
- * 
+ *
  * Version/date: October 30, 2025
- * 
- * Responsibilities of class: 
- * 
+ *
+ * Responsibilities of class:
+ * A board is a 2d array of pieces. It can add and remove pieces. It knows which moves are valid and where players can move their pieces. 
  */
 
 public class Board
 {
-	//Instance Variables
 	public static final int DIMENSION = 6;
+	
+	//Instance Variables
 	private Piece[][] board;	// A Board has-many pieces
 	
 	/**
-	 * Parameter constuctor.
-	 * 
+	 * Parameter constructor.
+	 *
 	 * Initializes the board as a 2d array of pieces. Fills up the board with empty (null pieces) and the pieces of the players.
 	 */
 	public Board(Player player1, Player player2)
@@ -85,52 +86,68 @@ public class Board
 	
 	/**
 	 * Gets the piece at a given row and column on the board
-	 * 
+	 *
 	 * @param row
 	 * @param column
-	 * @return
+	 * @return piece
 	 */
 	public Piece getPieceAt(int row, int column)
 	{
-		// TODO: Add exception
+		// Checks whether the board coordinates are not in bounds
+		if (row < 0 || row >= DIMENSION || column < 0 || column >= DIMENSION)
+		{
+			throw (new IllegalArgumentException("The given board coordinates is out of bounds."));
+		}
+		
+		// Otherwise, returns the piece at the given coordinates
 		return board[row][column];
 	}
 	
 	/**
 	 * Puts a given piece on the board at a given row and column coordinate
-	 * 
+	 *
 	 * @param piece
 	 * @param row
 	 * @param column
 	 */
 	public void setPiece(Piece piece, int row, int column)
 	{
-		// TODO: Add exception
+		// Checks whether the board coordinates are not in bounds
+		if (row < 0 || row >= DIMENSION || column < 0 || column >= DIMENSION)
+		{
+			throw (new IllegalArgumentException("The given board coordinates is out of bounds."));
+		}
+		
+		// Otherwise, sets the given piece at the given coordinates		
 		board[row][column] = piece;
 	}
 	
 	/**
 	 * Removes the piece at a given row and column coordinate
-	 * 
+	 *
 	 * @param row
 	 * @param column
 	 */
 	public void removePiece(int row, int column)
 	{
-		// TODO: Add exception
+		// Checks whether the board coordinates are not in bounds
+		if (row < 0 || row >= DIMENSION || column < 0 || column >= DIMENSION)
+		{
+			throw (new IllegalArgumentException("The given board coordinates is out of bounds."));
+		}
+		
+		// Otherwise, removes the piece at the given coordinates
 		board[row][column] = null;
 	}
 	
 	/**
 	 * Checks whether the given move is within the bounds of the board.
-	 * 
+	 *
 	 * @param move
 	 * @return true if the move is within bounds, false otherwise
 	 */
 	public boolean isMoveInBounds(Move move)
 	{
-		// TODO: Add exception?
-		
 		// Checks whether the start row is not within bounds
 		if (move.getFromRow() < 0 || move.getFromRow() >= DIMENSION)
 		{
@@ -160,18 +177,36 @@ public class Board
 	
 	/**
 	 * Checks whether a move is valid on the board
-	 * 
+	 *
 	 * @param move
-	 * @return
+	 * @return true if the move is valid, false otherwise
 	 */
 	public boolean isMoveValid(Move move)
-	{
-		// TODO:
+	{		
+		// Get the piece that is being moved
+		Piece pieceMoved = board[move.getFromRow()][move.getFromColumn()];
+		
+		// Get the owner of the piece moved
+		Player player = pieceMoved.getOwner();
+		
+		// Get the arraylist of their valid moves
+		ArrayList<Move> validMoves = getValidMoves(player);
+		
+		// Checks whether the given move is a valid move
+		for (Move validMove: validMoves)
+		{
+			if (validMove.equals(move))
+			{
+				return true;
+			}
+		}
+		
+		return false;
 	}
 	
 	/**
 	 * Given a player, gets all the possible moves a player can make during their turn
-	 * 
+	 *
 	 * @param player
 	 * @return an arraylist of moves of the possible moves a player can make
 	 */
@@ -214,7 +249,7 @@ public class Board
 	
 	/**
 	 * Promotes a regular piece to a king piece.
-	 * 
+	 *
 	 * @param piece
 	 */
 	public void promoteToKing(Piece piece)
@@ -233,7 +268,6 @@ public class Board
 		// Replaces the regular piece with the king piece in the player's list of pieces
 		piece.getOwner().removePiece(piece);
 		piece.getOwner().addPiece(newKing);
-		
 	}
 }
 

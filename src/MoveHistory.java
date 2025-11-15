@@ -3,19 +3,19 @@ import java.util.ArrayList;
 /**
  * Lead Author(s):
  * @author Kailyn Nguyen
- * 
+ *
  * Other contributors:
  * None
- * 
+ *
  * References:
  * Morelli, R., & Walde, R. (2016). Java, Java, Java: Object-Oriented Problem Solving.
  * Retrieved from
  * https://open.umn.edu/opentextbooks/textbooks/java-java-java-object-oriented-problem-solving
- * 
+ *
  * Version/date: October 30, 2025
- * 
- * Responsibilities of class: 
- * 
+ *
+ * Responsibilities of class:
+ * A move history has a list of past moves.
  */
 
 public class MoveHistory
@@ -33,7 +33,7 @@ public class MoveHistory
 	
 	/**
 	 * Adds a move to the past move list
-	 * 
+	 *
 	 * @param move
 	 */
 	public void addMove(Move move)
@@ -43,9 +43,10 @@ public class MoveHistory
 	
 	/**
 	 * Gets a string of information about the past moves
-	 * 
+	 *
 	 * @return pastMovesInfo
 	 */
+	@Override
 	public String toString()
 	{
 		String pastMovesInfo = "";
@@ -58,3 +59,4 @@ public class MoveHistory
 		return pastMovesInfo;
 	}
 }
+

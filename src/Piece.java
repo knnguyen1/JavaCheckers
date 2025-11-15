@@ -3,19 +3,19 @@ import java.util.ArrayList;
 /**
  * Lead Author(s):
  * @author Kailyn Nguyen
- * 
+ *
  * Other contributors:
  * None
- * 
+ *
  * References:
  * Morelli, R., & Walde, R. (2016). Java, Java, Java: Object-Oriented Problem Solving.
  * Retrieved from
  * https://open.umn.edu/opentextbooks/textbooks/java-java-java-object-oriented-problem-solving
- * 
+ *
  * Version/date: October 30, 2025
- * 
- * Responsibilities of class: 
- * 
+ *
+ * Responsibilities of class:
+ * A piece has a row, column and an owner. It can move.
  */
 
 public abstract class Piece
@@ -38,7 +38,7 @@ public abstract class Piece
 	
 	/**
 	 * Get the row of the piece
-	 * 
+	 *
 	 * @param row
 	 */
 	public int getRow()
@@ -48,7 +48,7 @@ public abstract class Piece
 	
 	/**
 	 * Get the column of the piece
-	 * 
+	 *
 	 * @param column
 	 */
 	public int getColumn()
@@ -58,7 +58,7 @@ public abstract class Piece
 	
 	/**
 	 * Get the owner of the piece
-	 * 
+	 *
 	 * @param owner
 	 */
 	public Player getOwner()
@@ -68,7 +68,7 @@ public abstract class Piece
 	
 	/**
 	 * Moves the piece's position to the given row and column.
-	 * 
+	 *
 	 * @param row
 	 * @param column
 	 */
@@ -80,9 +80,10 @@ public abstract class Piece
 	
 	/**
 	 * Gets all the possible moves for the piece.
-	 * 
+	 *
 	 * @param board
 	 * @return arraylist of moves
 	 */
 	abstract ArrayList<Move> getValidMoves(Board board);
 }
+

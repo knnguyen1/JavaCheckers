@@ -3,39 +3,37 @@ import java.util.ArrayList;
 /**
  * Lead Author(s):
  * @author Kailyn Nguyen
- * 
+ *
  * Other contributors:
  * None
- * 
+ *
  * References:
  * Morelli, R., & Walde, R. (2016). Java, Java, Java: Object-Oriented Problem Solving.
  * Retrieved from
  * https://open.umn.edu/opentextbooks/textbooks/java-java-java-object-oriented-problem-solving
- * 
+ *
  * Version/date: October 30, 2025
- * 
- * Responsibilities of class: 
- * 
+ *
+ * Responsibilities of class:
+ * A player has a name, a list of pieces on the board and a direction they can move.
  */
 
 public class Player
 {
 	//Instance Variables
 	private String name;	// A Player has-a name
-	private String color;	// A Player has-a piece color
 	private ArrayList<Piece> pieces;	// A Player has-many pieces
 	private int direction;	// A Player has-a direction that they move on the Board
 	
 	/**
 	 * Parameter Constructor. Sets the name and color of the player to the given name and color.
-	 * 
+	 *
 	 * @param name
 	 * @param color
 	 */
-	public Player(String name, String color, int direction)
+	public Player(String name, int direction)
 	{
 		this.name = name;
-		this.color = color;
 		this.direction = direction;
 		pieces = new ArrayList<Piece>();
 	}
@@ -47,15 +45,6 @@ public class Player
 	public String getName()
 	{
 		return name;
-	}
-	
-	/**
-	 * Gets the color of the player's pieces
-	 * @return color
-	 */
-	public String getColor()
-	{
-		return color;
 	}
 	
 	/**
@@ -81,8 +70,14 @@ public class Player
 	 */
 	public void removePiece(Piece piece)
 	{
-		// TODO: Add Exception Here
 		int index = pieces.indexOf(piece);
+		
+		// Checks whether that piece is not in the player's list
+		if (index == -1)
+		{
+			throw (new IllegalArgumentException("Cannot remove a piece that the player does not own."));
+		}
+		
 		pieces.remove(index);
 	}
 	
@@ -95,3 +90,4 @@ public class Player
 		pieces.add(piece);
 	}
 }
+
