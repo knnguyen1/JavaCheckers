@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * Version/date: October 30, 2025
  * 
  * Responsibilities of class: 
- * A move history has a list of past moves.
+ * 
  */
 
 public class MoveHistory
@@ -46,7 +46,6 @@ public class MoveHistory
 	 * 
 	 * @return pastMovesInfo
 	 */
-	@Override
 	public String toString()
 	{
 		String pastMovesInfo = "";

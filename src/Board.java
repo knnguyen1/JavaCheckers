@@ -15,14 +15,13 @@ import java.util.ArrayList;
  * Version/date: October 30, 2025
  * 
  * Responsibilities of class: 
- * A board is a 2d array of pieces. It can add and remove pieces. It knows which moves are valid and where players can move their pieces.  
+ * 
  */
 
 public class Board
 {
-	public static final int DIMENSION = 6;
-	
 	//Instance Variables
+	public static final int DIMENSION = 6;
 	private Piece[][] board;	// A Board has-many pieces
 	
 	/**
@@ -89,17 +88,11 @@ public class Board
 	 * 
 	 * @param row
 	 * @param column
-	 * @return piece
+	 * @return
 	 */
 	public Piece getPieceAt(int row, int column)
 	{
-		// Checks whether the board coordinates are not in bounds
-		if (row < 0 || row >= DIMENSION || column < 0 || column >= DIMENSION)
-		{
-			throw (new IllegalArgumentException("The given board coordinates is out of bounds."));
-		}
-		
-		// Otherwise, returns the piece at the given coordinates
+		// TODO: Add exception
 		return board[row][column];
 	}
 	
@@ -112,13 +105,7 @@ public class Board
 	 */
 	public void setPiece(Piece piece, int row, int column)
 	{
-		// Checks whether the board coordinates are not in bounds
-		if (row < 0 || row >= DIMENSION || column < 0 || column >= DIMENSION)
-		{
-			throw (new IllegalArgumentException("The given board coordinates is out of bounds."));
-		}
-		
-		// Otherwise, sets the given piece at the given coordinates		
+		// TODO: Add exception
 		board[row][column] = piece;
 	}
 	
@@ -130,13 +117,7 @@ public class Board
 	 */
 	public void removePiece(int row, int column)
 	{
-		// Checks whether the board coordinates are not in bounds
-		if (row < 0 || row >= DIMENSION || column < 0 || column >= DIMENSION)
-		{
-			throw (new IllegalArgumentException("The given board coordinates is out of bounds."));
-		}
-		
-		// Otherwise, removes the piece at the given coordinates
+		// TODO: Add exception
 		board[row][column] = null;
 	}
 	
@@ -148,6 +129,8 @@ public class Board
 	 */
 	public boolean isMoveInBounds(Move move)
 	{
+		// TODO: Add exception?
+		
 		// Checks whether the start row is not within bounds
 		if (move.getFromRow() < 0 || move.getFromRow() >= DIMENSION)
 		{
@@ -179,29 +162,11 @@ public class Board
 	 * Checks whether a move is valid on the board
 	 * 
 	 * @param move
-	 * @return true if the move is valid, false otherwise
+	 * @return
 	 */
 	public boolean isMoveValid(Move move)
-	{		
-		// Get the piece that is being moved
-		Piece pieceMoved = board[move.getFromRow()][move.getFromColumn()];
-		
-		// Get the owner of the piece moved
-		Player player = pieceMoved.getOwner();
-		
-		// Get the arraylist of their valid moves
-		ArrayList<Move> validMoves = getValidMoves(player);
-		
-		// Checks whether the given move is a valid move
-		for (Move validMove: validMoves)
-		{
-			if (validMove.equals(move))
-			{
-				return true;
-			}
-		}
-		
-		return false;
+	{
+		// TODO:
 	}
 	
 	/**
@@ -268,6 +233,7 @@ public class Board
 		// Replaces the regular piece with the king piece in the player's list of pieces
 		piece.getOwner().removePiece(piece);
 		piece.getOwner().addPiece(newKing);
+		
 	}
 }
 
