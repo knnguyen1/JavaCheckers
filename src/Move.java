@@ -13,7 +13,7 @@
  * Version/date: October 30, 2025
  * 
  * Responsibilities of class: 
- * 
+ * A move has a starting and ending position. It knows its start and end coordinates. It has a piece moved and captured piece.
  */
 
 public class Move
@@ -46,6 +46,7 @@ public class Move
 	
 	/**
 	 * Checks whether the move has made a capture or not.
+	 * 
 	 * @return true if the move resulted in a capture, otherwise false
 	 */
 	public boolean madeCapture() 
@@ -60,31 +61,92 @@ public class Move
 		}
 	}
 	
+	/**
+	 * Gets the row where the move began.
+	 * 
+	 * @return fromRow
+	 */
 	public int getFromRow()
 	{
 		return fromRow;
 	}
 	
+	/**
+	 * Gets the column where the move began.
+	 * 
+	 * @return fromColumn
+	 */
 	public int getFromColumn()
 	{
 		return fromColumn;
 	}
 	
+	/**
+	 * Gets the row where the move ended.
+	 * 
+	 * @return toRow
+	 */
 	public int getToRow()
 	{
 		return toRow;
 	}
 	
+	/**
+	 * Gets the column where the move ended.
+	 * 
+	 * @return toColumn
+	 */
 	public int getToColumn()
 	{
 		return toColumn;
 	}
 	
 	/**
+	 * Checks whether the given object is the same move
+	 * 
+	 * @param move
+	 * @return true if the object is the same move, otherwise false
+	 */
+	@Override
+	public boolean equals(Object other)
+	{
+		// Checks if they are the same object with the same reference in memory
+		if (this == other) {
+			return true;
+		}
+		// Null check
+		else if (other == null)
+		{
+			return false;
+		}
+		// Checks if the object is not a Move
+		else if (other instanceof Move == false)
+		{
+			return false;
+		}
+		else
+		{
+			// Cast other as a Move
+			Move move = (Move) other;
+		
+			//Checks if they have the same beginning and ending coordinates
+			if (move.getFromRow() == fromRow && move.getFromColumn() == fromColumn && move.getToRow() == toRow && move.getToColumn() == toColumn)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+	}	
+	
+	/**
 	 * Gets a string of information about the move
 	 * 
 	 * @return moveInfo
 	 */
+	@Override
 	public String toString()
 	{
 		String moveInfo = pieceMoved.getOwner().getName() + " moved their piece from (" + fromRow + ", " + fromColumn + ") to (" + toRow + " ," + toColumn + ")";

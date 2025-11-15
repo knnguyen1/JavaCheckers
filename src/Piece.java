@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * Version/date: October 30, 2025
  * 
  * Responsibilities of class: 
- * 
+ * A piece has a row, column and an owner. It can move.
  */
 
 public abstract class Piece
