@@ -1,5 +1,23 @@
 import java.util.ArrayList;
 
+/**
+ * Lead Author(s):
+ * @author Kailyn Nguyen
+ * 
+ * Other contributors:
+ * None
+ * 
+ * References:
+ * Morelli, R., & Walde, R. (2016). Java, Java, Java: Object-Oriented Problem Solving.
+ * Retrieved from
+ * https://open.umn.edu/opentextbooks/textbooks/java-java-java-object-oriented-problem-solving
+ * 
+ * Version/date: October 30, 2025
+ * 
+ * Responsibilities of class: 
+ * A regular piece is a piece that can move forward diagonally.
+ */
+
 public class RegularPiece extends Piece // A RegularPiece is-a Piece
 {
 	/**
