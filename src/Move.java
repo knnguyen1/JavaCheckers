@@ -19,12 +19,12 @@
 public class Move
 {
 	//Instance Variables
-	private int fromRow;		// A Move has-a from row position
-	private int toRow;			// A Move has-a to row position
-	private int fromColumn;		// A Move has-a from column position
-	private int toColumn;		// A Move has-a to column position
-	private Piece pieceMoved; 	// A Move has-a piece moved
-	private Piece capturedPiece; // A Move has-a captured piece
+	private int fromRow;			// A Move has-a from row position
+	private int toRow;				// A Move has-a to row position
+	private int fromColumn;			// A Move has-a from column position
+	private int toColumn;			// A Move has-a to column position
+	private Piece pieceMoved; 		// A Move has-a piece moved
+	private Piece capturedPiece;	// A Move has-a captured piece
 	
 	/**
 	 * Parameter Constructor. Sets the from and to row and column indexes to the given from and to column indexes.

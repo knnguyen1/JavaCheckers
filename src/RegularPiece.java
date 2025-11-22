@@ -31,6 +31,7 @@ public class RegularPiece extends Piece // A RegularPiece is-a Piece
 	{
 		super(row, column, owner);
 	}
+	
 	@Override
 	public ArrayList<Move> getValidMoves(Board board)
 	{

@@ -21,11 +21,11 @@ import java.util.ArrayList;
 public class CheckersGame
 {
 	// Instance variables
-	private Board board;
-	private MoveHistory moveHistory;
-	private Player player1;
-	private Player player2;
-	private Player currentPlayer;
+	private Board board;				//A CheckersGame has-a board
+	private MoveHistory moveHistory;	//A CheckersGame has-a move history
+	private Player player1;				//A CheckersGame has-a player1
+	private Player player2;				//A CheckersGame has-a player2
+	private Player currentPlayer;		//A CheckersGame has-a current player
 
 	/**
 	 * Parameter constructor. Given player1 and player2's name, sets up the move history and board.
@@ -114,7 +114,7 @@ public class CheckersGame
 					}
 				}
 
-				// TODO: Reinforce the rule that kings make a capture directly after being promoted.
+				// TODO: Reinforce the rule that kings cannot make a capture directly after being promoted.
 
 				// Gets the valid moves for that piece
 				ArrayList<Move> validMoves = pieceMoved.getValidMoves(board);

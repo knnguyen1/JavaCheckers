@@ -21,9 +21,9 @@ import java.util.ArrayList;
 public class Player
 {
 	//Instance Variables
-	private String name;	// A Player has-a name
+	private String name;				// A Player has-a name
 	private ArrayList<Piece> pieces;	// A Player has-many pieces
-	private int direction;	// A Player has-a direction that they move on the Board
+	private int direction;				// A Player has-a direction that they move on the board
 	
 	/**
 	 * Parameter Constructor. Sets the name and color of the player to the given name and color.

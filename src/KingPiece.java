@@ -26,12 +26,12 @@ public class KingPiece extends Piece	// A KingPiece is-a Piece
 	 * @param row
 	 * @param column
 	 * @param owner
-	 *
 	 */
 	public KingPiece(int row, int column, Player owner)
 	{
 		super(row, column, owner);
 	}
+	
 	@Override
 	ArrayList<Move> getValidMoves(Board board)
 	{
