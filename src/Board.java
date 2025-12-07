@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 public class Board
 {
-	public static final int DIMENSION = 6;
+	public static final int DIMENSION = 8;
 	
 	//Instance Variables
 	private Piece[][] board;	// A Board has-many pieces

@@ -41,6 +41,16 @@ public class CheckersGame
 		board = new Board(player1, player2);
 		currentPlayer = player1;
 	}
+	
+	/**
+	 * Gets the board of the game.
+	 * 
+	 * @return board
+	 */
+	public Board getBoard()
+	{
+		return board;
+	}
 
 	/**
 	 * Switches the player who needs to make the next move.
