@@ -26,6 +26,7 @@ public class CheckersGame
 	private Player player1;				//A CheckersGame has-a player1
 	private Player player2;				//A CheckersGame has-a player2
 	private Player currentPlayer;		//A CheckersGame has-a current player
+	private Piece jumpingPiece;			//A CheckersGame has-a jumping piece 
 
 	/**
 	 * Parameter constructor. Given player1 and player2's name, sets up the move history and board.
@@ -40,16 +41,27 @@ public class CheckersGame
 		player2 = new Player(player2Name, -1);
 		board = new Board(player1, player2);
 		currentPlayer = player1;
+		jumpingPiece = null;
 	}
 	
 	/**
-	 * Gets the board of the game.
+	 * Gets the board.
 	 * 
 	 * @return board
 	 */
 	public Board getBoard()
 	{
 		return board;
+	}
+	
+	/**
+	 * Gets the move history.
+	 * 
+	 * @return moveHistory
+	 */
+	public MoveHistory getMoveHistory()
+	{
+		return moveHistory;
 	}
 
 	/**
@@ -76,6 +88,26 @@ public class CheckersGame
 	{
 		return currentPlayer;
 	}
+	
+	/**
+	 * Gets player1.
+	 *
+	 * @return the player1.
+	 */
+	public Player getPlayer1()
+	{
+		return player1;
+	}
+	
+	/**
+	 * Gets player2.
+	 *
+	 * @return the player2.
+	 */
+	public Player getPlayer2()
+	{
+		return player2;
+	}
 
 	/**
 	 * Makes a move on the board.
@@ -85,51 +117,56 @@ public class CheckersGame
 	 */
 	public boolean makeMove(Move move)
 	{
-		// Checks whether the piece being moved is owned by the current player
-		if (board.getPieceAt(move.getFromRow(), move.getFromColumn()).getOwner() == currentPlayer)
+		// Stores the piece moved
+		Piece pieceMoved = board.getPieceAt(move.getFromRow(), move.getFromColumn());
+		
+		// Ensures that any forced captures are made
+		if (jumpingPiece != null && jumpingPiece != pieceMoved)
+		{
+			return false;
+		}
+	
+		// Checks whether the piece can be moved by the current player
+		if (pieceMoved != null && pieceMoved.getOwner() == currentPlayer)
 		{
 			// Checks whether the move is valid
 			if (board.isMoveValid(move))
 			{
 				// Makes a capture if necessary
-				if (move.madeCapture())
+				if (Math.abs(move.getFromRow() - move.getToRow()) == 2 && Math.abs(move.getFromColumn() - move.getToColumn()) == 2)
 				{
 					Piece pieceCaptured = board.getPieceAt((move.getFromRow() + move.getToRow()) / 2, (move.getFromColumn() + move.getToColumn()) / 2);
+					move.setCapturedPiece(pieceCaptured);
 					pieceCaptured.getOwner().removePiece(pieceCaptured);
 					board.removePiece((move.getFromRow() + move.getToRow()) / 2, (move.getFromColumn() + move.getToColumn()) / 2);
 				}
 
 				// Move the piece
-				Piece pieceMoved = board.getPieceAt(move.getFromRow(), move.getFromColumn());
 				board.setPiece(pieceMoved, move.getToRow(), move.getToColumn());
 				board.removePiece(move.getFromRow(), move.getFromColumn());
 				pieceMoved.moveTo(move.getToRow(), move.getToColumn());
 
 				// Records the move in the history
 				moveHistory.addMove(move);
-
-				// Store the result of whether the player has any captured moves
-				boolean hasCaptureMove = false;
-
+				
 				// Checks whether the piece moved can be promoted
 				if (pieceMoved instanceof RegularPiece == true)
 				{
-					if (currentPlayer == player1 && pieceMoved.getRow() == Board.DIMENSION - 1)
+					if ((currentPlayer == player1 && pieceMoved.getRow() == Board.DIMENSION - 1) || (currentPlayer == player2 && pieceMoved.getRow() == 0))
 					{
 						board.promoteToKing(pieceMoved);
-					}
-					else if (currentPlayer == player2 && pieceMoved.getRow() == 0)
-					{
-						board.promoteToKing(pieceMoved);
+						
+						// Ends the player's turn
+						jumpingPiece = null;
+						switchTurns();
+						return true;	
 					}
 				}
 
-				// TODO: Reinforce the rule that kings cannot make a capture directly after being promoted.
-
-				// Gets the valid moves for that piece
+				// Checks whether the current player has any more captures/jumps available
+				boolean hasCaptureMove = false;
 				ArrayList<Move> validMoves = pieceMoved.getValidMoves(board);
 
-				// Searches the player's valid moves to see if they have any captures available
 				for (Move validMove : validMoves)
 				{
 					if (validMove.madeCapture())
@@ -145,11 +182,14 @@ public class CheckersGame
 					// Switches turns if they cannot make any more jumps
 					switchTurns();
 				}
+				else
+				{
+					// Continues the player's turn with the same piece
+					jumpingPiece = pieceMoved;
+				}
+				return true;
 			}
-
-			return true;
 		}
-
 		return false;
 	}
 

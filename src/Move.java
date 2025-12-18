@@ -62,6 +62,16 @@ public class Move
 	}
 	
 	/**
+	 * Sets the captured piece to the given captured piece
+	 *
+	 * @param piece
+	 */
+	public void setCapturedPiece(Piece piece)
+	{
+		this.capturedPiece = piece;
+	}
+	
+	/**
 	 * Gets the row where the move began.
 	 *
 	 * @return fromRow

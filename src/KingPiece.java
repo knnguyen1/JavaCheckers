@@ -43,25 +43,31 @@ public class KingPiece extends Piece	// A KingPiece is-a Piece
 		{
 			for (int colDirection = -1; colDirection <= 1; colDirection += 2)
 			{
-				// Stores the ending coordinates
-				int row = super.getRow() + rowDirection;
-				int col = super.getColumn() + colDirection;
+				// Stores the ending coordinates for a regular move and a jump move
+				int regularMoveRow = super.getRow() + rowDirection;
+				int regularMoveCol = super.getColumn() + colDirection;
+				
+				int jumpMoveRow = super.getRow() + 2 * rowDirection;
+				int jumpMoveCol = super.getColumn() + 2 * colDirection;
+				
 				
 				// Creates a new move with the ending coordinates
-				Move newMove = new Move(super.getRow(), super.getColumn(), row, col, this, null);
-				
-				// Checks whether the move is in bounds and there is an empty space for the piece to move
-				if (board.isMoveInBounds(newMove) && board.getPieceAt(row, col) == null)
+				Move newRegularMove = new Move(super.getRow(), super.getColumn(), regularMoveRow, regularMoveCol, this, null);
+				Move newJumpMove = new Move(super.getRow(), super.getColumn(), jumpMoveRow, jumpMoveCol, this, null);
+								
+				// Checks whether a regular move is valid
+				if (board.isMoveInBounds(newRegularMove))
 				{
-					possibleMoves.add(newMove);
+					if (board.getPieceAt(regularMoveRow, regularMoveCol) == null)
+					{
+						possibleMoves.add(newRegularMove);
+					}
 				}
-				// Checks whether there is a possible move in the direction but as a jump
-				else if (board.getPieceAt(row, col) != null)
-				{
-					Move newJumpMove = new Move(super.getRow(), super.getColumn(), row + rowDirection, col + colDirection, this, board.getPieceAt(row, col));
-					
-					// Checks whether the jump move is valid
-					if (board.isMoveInBounds(newJumpMove) && board.getPieceAt(row + rowDirection, col + colDirection) == null && board.getPieceAt(row, col).getOwner() != super.getOwner())
+				
+				// Checks whether a jump move is valid
+				if (board.isMoveInBounds(newJumpMove))
+				{				
+					if (board.getPieceAt(jumpMoveRow, jumpMoveCol) == null && board.getPieceAt(regularMoveRow, regularMoveCol) != null && board.getPieceAt(regularMoveRow, regularMoveCol).getOwner() != super.getOwner())
 					{
 						possibleMoves.add(newJumpMove);
 					}

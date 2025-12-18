@@ -48,13 +48,7 @@ public class Board
 		{
 			for (int column = 0; column < DIMENSION; column++)
 			{
-				if (row%2 == 0 && column %2 == 1)
-				{
-					Piece piece = new RegularPiece(row, column, player1);
-					board[row][column] = piece;
-					player1.addPiece(piece);
-				}
-				if (row%2 == 1 && column %2 == 0)
+				if ((row+column) % 2 == 1)
 				{
 					Piece piece = new RegularPiece(row, column, player1);
 					board[row][column] = piece;
@@ -68,13 +62,7 @@ public class Board
 		{
 			for (int column = 0; column < DIMENSION; column++)
 			{
-				if (row%2 == 0 && column %2 == 0)
-				{
-					Piece piece = new RegularPiece(row, column, player2);
-					board[row][column] = piece;
-					player2.addPiece(piece);
-				}
-				if (row%2 == 1 && column %2 == 1)
+				if ((row+column) % 2 == 1)
 				{
 					Piece piece = new RegularPiece(row, column, player2);
 					board[row][column] = piece;
