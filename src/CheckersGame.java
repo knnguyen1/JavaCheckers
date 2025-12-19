@@ -27,6 +27,7 @@ public class CheckersGame
 	private Player player2;				//A CheckersGame has-a player2
 	private Player currentPlayer;		//A CheckersGame has-a current player
 	private Piece jumpingPiece;			//A CheckersGame has-a jumping piece 
+	private boolean capturedPreviously;			
 
 	/**
 	 * Parameter constructor. Given player1 and player2's name, sets up the move history and board.
@@ -129,6 +130,10 @@ public class CheckersGame
 		// Checks whether the piece can be moved by the current player
 		if (pieceMoved != null && pieceMoved.getOwner() == currentPlayer)
 		{
+			
+			// Stores whether a capture has been made
+			boolean madeCapture = false;
+			
 			// Checks whether the move is valid
 			if (board.isMoveValid(move))
 			{
@@ -139,6 +144,7 @@ public class CheckersGame
 					move.setCapturedPiece(pieceCaptured);
 					pieceCaptured.getOwner().removePiece(pieceCaptured);
 					board.removePiece((move.getFromRow() + move.getToRow()) / 2, (move.getFromColumn() + move.getToColumn()) / 2);
+					madeCapture = true;
 				}
 
 				// Move the piece
@@ -177,15 +183,16 @@ public class CheckersGame
 				}
 
 				// Checks whether the current player can make any more jump
-				if (hasCaptureMove == false)
-				{
-					// Switches turns if they cannot make any more jumps
-					switchTurns();
-				}
-				else
+				if (hasCaptureMove == true && madeCapture == true)
 				{
 					// Continues the player's turn with the same piece
 					jumpingPiece = pieceMoved;
+				}
+				else
+				{
+					// Switches turns if they cannot make any more jumps
+					jumpingPiece = null;
+					switchTurns();
 				}
 				return true;
 			}
@@ -194,14 +201,14 @@ public class CheckersGame
 	}
 
 	/**
-	 * Checks whether the current player has won.
+	 * Checks whether the previous player has won.
 	 *
-	 * @return true if the current player won, false otherwise
+	 * @return true if the previous player won, false otherwise
 	 */
 	public boolean checkForWin()
 	{
-		// Checks whose the current player
-		if (currentPlayer == player1)
+		// Checks whose the current player (If the current player is not player 1, then player 1 was the previous. Check whether player2 has any moves left)
+		if (currentPlayer != player1)
 		{
 			// Checks whether player2 no longer has any more pieces or cannot make any moves
 			if (player2.getPieces().isEmpty() == true || board.getValidMoves(player2).isEmpty() == true)

@@ -40,7 +40,7 @@ import javax.swing.UIManager;
  * Version/date: November 14, 2025
  *
  * Responsibilities of class:
- * 
+ * GUI for Checkers.
  */
 
 public class CheckersView extends JFrame // A CheckersView is-a JFrame
@@ -55,12 +55,13 @@ public class CheckersView extends JFrame // A CheckersView is-a JFrame
 	private JTextArea moveHistoryTextArea;
 	private JButton startButton;
 	private JButton restartButton;
+	//private JButton loadButton;
+	private JButton saveButton;
 	private BoardButton selectedButton;
 	private ImageIcon blackKingIcon;
 	private ImageIcon blackRegularIcon;
 	private ImageIcon redKingIcon;
-	private ImageIcon redRegularIcon;
-	
+	private ImageIcon redRegularIcon;	
 	
 	/**
 	 * Parameter constructor. Sets the model with the given model. Sets up the main game window.
@@ -157,7 +158,7 @@ public class CheckersView extends JFrame // A CheckersView is-a JFrame
 		moveHistoryTextArea.setLineWrap(true);
 		moveHistoryTextArea.setWrapStyleWord(true);
 		JScrollPane historyScrollPane = new JScrollPane(moveHistoryTextArea);
-		historyScrollPane.setPreferredSize(new Dimension(250, 540));
+		historyScrollPane.setPreferredSize(new Dimension(270, 540));
 		
 		moveHistoryPanel.add(historyLabel);
 		moveHistoryPanel.add(historyScrollPane);
@@ -170,17 +171,19 @@ public class CheckersView extends JFrame // A CheckersView is-a JFrame
 		
 		startButton = new JButton("StartGame");
 		restartButton = new JButton("Restart Game");
-		JButton loadButton = new JButton("Load Game");
-		JButton saveButton = new JButton("Save Game");
+		//loadButton = new JButton("Load Game");
+		saveButton = new JButton("Save Game");
 		
 		disableStartButton();
+		saveButton.setEnabled(false);
 		
 		startButton.addActionListener(new StartButtonListener(this));		
 		restartButton.addActionListener(new RestartButtonListener(this));
-		
+		//loadButton.addActionListener(new LoadButtonListener(model, this));
+
 		controlPanel.add(startButton);
 		controlPanel.add(restartButton);
-		controlPanel.add(loadButton);
+		//controlPanel.add(loadButton);
 		controlPanel.add(saveButton);
 
 		
@@ -264,7 +267,9 @@ public class CheckersView extends JFrame // A CheckersView is-a JFrame
 	{
 		player1TextField.setEditable(false);
 		player2TextField.setEditable(false);
+		setInstructionText(getPlayer1Name() + ", please make your move.");
 		disableStartButton();
+		saveButton.setEnabled(true);
 		selectedButton = null;
 		
 		model = new CheckersGame(getPlayer1Name(), getPlayer2Name());
@@ -282,6 +287,9 @@ public class CheckersView extends JFrame // A CheckersView is-a JFrame
 				}
 			}
 		}
+		
+		// Add listener for the save game button
+		saveButton.addActionListener(new SaveButtonListener(model, this));
 			
 		updateUI();
 	}
@@ -296,6 +304,7 @@ public class CheckersView extends JFrame // A CheckersView is-a JFrame
 		player1TextField.setEditable(true);
 		player2TextField.setEditable(true);
 		disableStartButton();
+		saveButton.setEnabled(false);
 		selectedButton = null;
 		
 		model = null;		
@@ -316,6 +325,12 @@ public class CheckersView extends JFrame // A CheckersView is-a JFrame
 					}
 				}
 			}
+		}
+		
+		// Removes listener from the save game button
+		for (ActionListener listener : saveButton.getActionListeners())	
+		{
+			saveButton.removeActionListener(listener);
 		}
 		
 		updateUI();
@@ -345,7 +360,6 @@ public class CheckersView extends JFrame // A CheckersView is-a JFrame
 	 */
 	public void updateUI()
 	{
-		// Updates the Board
 		// No game has started
 		if (model == null)
 		{
@@ -365,18 +379,7 @@ public class CheckersView extends JFrame // A CheckersView is-a JFrame
 			instructionLabel.setText("Please input your names and click the Start Button.");
 			moveHistoryTextArea.setText("");
 		}
-//		// Check if the current player has won and turns off all the board buttons if they do
-//		else if (model.checkForWin())
-//		{
-//			for (int row = 0; row < Board.DIMENSION; row++)
-//			{
-//				for (int col = 0; col < Board.DIMENSION; col++)
-//				{
-//					boardButtons[row][col].setEnabled(false);
-//				}
-//			}
-//		}
-		// A game is occurring. Updates the board to reflect the model.
+		 //A game is occurring. Updates the board to reflect the model.
 		else 
 		{
 			for (int row = 0; row < Board.DIMENSION; row++)
@@ -412,6 +415,25 @@ public class CheckersView extends JFrame // A CheckersView is-a JFrame
 							{
 								boardButtons[row][col].setIcon(redKingIcon);
 							}
+						}
+					}
+				}
+			}
+			// Check if the previous player has won and turns off all the board buttons if they do
+			if (model.checkForWin())
+			{
+				for (int row = 0; row < Board.DIMENSION; row++)
+				{
+					for (int col = 0; col < Board.DIMENSION; col++)
+					{
+						boardButtons[row][col].setEnabled(false);
+						if (model.getCurrentPlayer() == model.getPlayer1())
+						{
+							instructionLabel.setText(getPlayer2Name() + " has won!");
+						}
+						else
+						{						
+							instructionLabel.setText(getPlayer1Name() + " has won!");
 						}
 					}
 				}

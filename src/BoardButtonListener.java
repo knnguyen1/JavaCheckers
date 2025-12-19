@@ -18,7 +18,7 @@ import javax.swing.BorderFactory;
  * Version/date: December 12, 2025
  *
  * Responsibilities of class:
- * 
+ * A BoardButtonListener implements an ActionListener.
  */
 
 public class BoardButtonListener implements ActionListener
@@ -28,6 +28,13 @@ public class BoardButtonListener implements ActionListener
 	private CheckersView view;	// A BoardButtonListener has-a view
 	private BoardButton button;	// A BoardButtonListener has-a button
 
+	/**
+	 * Parameter Constructor. Sets the model, view and button with the given model, view and button.
+	 * 
+	 * @param model
+	 * @param view
+	 * @param button
+	 */
 	public BoardButtonListener (CheckersGame model, CheckersView view, BoardButton button)
 	{
 		this.model = model;
@@ -50,7 +57,6 @@ public class BoardButtonListener implements ActionListener
 				button.setBorder(BorderFactory.createLineBorder(Color.YELLOW, 2));
 			}
 		}
-		// error somewhere help cryssss
 		else
 		{
 			// Attempts to make the move
@@ -61,21 +67,22 @@ public class BoardButtonListener implements ActionListener
 			
 			Move move = new Move(fromRow, fromCol, toRow, toCol, model.getBoard().getPieceAt(fromRow, fromCol), null);
 			
-			//TODO: Set text
+			// Sets instruction text based on if the move was successful or not.
 			if (model.makeMove(move))
 			{
-				// check for win etc
-//				if ()
-//				setInstructionText(model.getCurrentPlayer())
-				System.out.println("A move has been completed.");
+				view.setInstructionText(model.getCurrentPlayer().getName() + ", please make your move.");
 			}
 			else 
 			{
-//				setInstructionText()
+				
+				view.setInstructionText("That is not a valid move. " + model.getCurrentPlayer().getName() + ", please make your move.");
 			}
 			
+			// Resets the selected button
 			view.getSelectedButton().setBorder(null);
 			view.setSelectedButton(null);
+			
+			// Updates the UI
 			view.updateUI();
 		}
 	}

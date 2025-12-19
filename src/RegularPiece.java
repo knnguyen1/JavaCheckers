@@ -70,6 +70,7 @@ public class RegularPiece extends Piece // A RegularPiece is-a Piece
 			{				
 				if (board.getPieceAt(jumpMoveRow, jumpMoveCol) == null && board.getPieceAt(regularMoveRow, regularMoveCol) != null && board.getPieceAt(regularMoveRow, regularMoveCol).getOwner() != super.getOwner())
 				{
+					newJumpMove.setCapturedPiece(board.getPieceAt(regularMoveRow, regularMoveCol));
 					possibleMoves.add(newJumpMove);
 				}
 			}

@@ -18,21 +18,25 @@ import javax.swing.event.DocumentListener;
  * Version/date: December 5, 2025
  *
  * Responsibilities of class:
- * A board is a 2d array of pieces. It can add and remove pieces. It knows which moves are valid and where players can move their pieces. 
+ * A NameTextFieldListener implements DocumentListener.
  */
 public class NameTextFieldListener implements DocumentListener
 {
 	//Instance Variable
 	private CheckersView view;
-		
+	
+	/**
+	 * Parameter constructor. Sets the view with the given view.
+	 * 
+	 * @param view
+	 */
 	public NameTextFieldListener(CheckersView view)
 	{
 		this.view = view;
 	}
 
 	/**
-	 * 
-	 * @param 
+	 * Checks whether the field has a name. If both player text boxes are filled, enable the start button.
 	 */
 	public void hasNameInputs()
 	{
